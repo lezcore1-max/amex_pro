@@ -55,6 +55,7 @@ framework_text = {
     'Profitability Equation': 'Prediction = Rank( (Margin_Bin * 1000) + Rank(Engagement - Churn) )',
     'Prediction Logic': 'Margin dominates macro-position. The population is divided into 10,000 discrete buckets based on Log-Margin. Engagement and Churn act purely as a micro tie-breaker within those 50-person buckets.',
     'Variable Selection Logic': 'Revolve behavior (f1) is blended continuously into revenue, avoiding hard structural walls. ECL is calculated on actual usage (f1+f5) to stop penalizing premium high-limit customers (f17).',
+    'Coefficient/Weight Derivation': 'Revenue coefficients (1.0-2.2% interchange) and Cost coefficients were derived empirically through V3/V6 baseline testing. Bin multiplier (1000) ensures Margin absolutely dominates Engagement tie-breakers.',
     'Feature Transformations': 'Log1p was applied to raw P&L components (no flat constants) to aggressively compress power-law whales while preserving true relative dollar ratios.',
     'Business Logic': 'Revolvers naturally sort higher due to 18% APR margins vs 2% interchange. By keeping it continuous, we avoid disqualifying highly profitable transactors. Fixing the ECL line-penalty safely rescues premium safe accounts.',
     'Assumptions': 'ECL is tied to usage, not maximum line.',
@@ -65,7 +66,7 @@ for row_idx in range(2, 12):
     if section_name in framework_text:
         ws_fw.cell(row=row_idx, column=2, value=framework_text[section_name])
 
-out_path = 'amex_submission_round1_v8.xlsx'
+out_path = 'amex_submission_round1_v8_fixed.xlsx'
 wb.save(out_path)
 print(f"Saved to {out_path}")
 
